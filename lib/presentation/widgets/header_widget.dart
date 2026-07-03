@@ -9,7 +9,7 @@ class HeaderWidget extends StatelessWidget {
 
   String _clockTime(DateTime d) {
     final h12 = d.hour % 12 == 0 ? 12 : d.hour % 12;
-    final pad = (int n) => n.toString().padLeft(2, '0');
+    pad(int n) => n.toString().padLeft(2, '0');
     return '${pad(h12)}:${pad(d.minute)}:${pad(d.second)}';
   }
 

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:intl/intl.dart';
 import '../../core/constants/mosque_config.dart';
 import '../models/daily_timings_model.dart';
@@ -31,7 +33,7 @@ class PrayerRepository {
       final hijriText = '${hijri['day']} ${hijri['month']['ar']} ${hijri['year']}هـ';
       final monthNum = int.tryParse(greg['month']['number'].toString()) ?? 1;
       final gregorianText =
-          '${greg['weekday']['ar']}، ${greg['day']} ${_gregMonthsAr[monthNum - 1]} ${greg['year']}م';
+          '${greg['day']} ${_gregMonthsAr[monthNum - 1]} ${greg['year']}م';
 
       return _buildDailyModel(
         rawTimings: timings.map((k, v) => MapEntry(k, v.toString())),
