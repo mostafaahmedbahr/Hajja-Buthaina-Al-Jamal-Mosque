@@ -37,24 +37,40 @@ class MosqueClockScreen extends StatelessWidget {
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           final isWide = constraints.maxWidth > 900;
-                          final content = [
-                            DomeCountdownWidget(state: state),
-                            SizedBox(width: isWide ? 40 : 0, height: isWide ? 0 : 24),
-                            Expanded(
-                              child: PrayerRowWidget(
-                                prayers: state.prayers,
-                                nextPrayer: state.nextPrayer,
-                                now: state.now,
+                          final dome = DomeCountdownWidget(state: state);
+                          final row = PrayerRowWidget(
+                            prayers: state.prayers,
+                            nextPrayer: state.nextPrayer,
+                            now: state.now,
+                          );
+
+                          // شاشات عريضة (تابلت/تلفزيون): القبة والصلوات جنبًا لجنب،
+                          // ويُسمح بـ Expanded هنا لأن Row له عرض محدود (bounded).
+                          if (isWide) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  dome,
+                                  const SizedBox(width: 40),
+                                  Expanded(child: row),
+                                ],
                               ),
-                            ),
-                          ];
-                          return Padding(
+                            );
+                          }
+
+                          // شاشات ضيقة: نستخدم تمرير عمودي، ولا يجوز استخدام Expanded
+                          // هنا لأن ارتفاع SingleChildScrollView غير محدود (unbounded).
+                          return SingleChildScrollView(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: isWide
-                                ? Row(crossAxisAlignment: CrossAxisAlignment.center, children: content)
-                                : SingleChildScrollView(
-                                    child: Column(children: content),
-                                  ),
+                            child: Column(
+                              children: [
+                                dome,
+                                const SizedBox(height: 24),
+                                row,
+                              ],
+                            ),
                           );
                         },
                       ),
