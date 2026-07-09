@@ -93,4 +93,9 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.goldSoft,
   );
+  static TextStyle tickerText18 = GoogleFonts.cairo(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: AppColors.goldSoft,
+  );
 }

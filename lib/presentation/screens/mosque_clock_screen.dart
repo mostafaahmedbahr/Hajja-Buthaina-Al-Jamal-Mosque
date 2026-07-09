@@ -44,8 +44,6 @@ class MosqueClockScreen extends StatelessWidget {
                             now: state.now,
                           );
 
-                          // شاشات عريضة (تابلت/تلفزيون): القبة والصلوات جنبًا لجنب،
-                          // ويُسمح بـ Expanded هنا لأن Row له عرض محدود (bounded).
                           if (isWide) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -60,8 +58,6 @@ class MosqueClockScreen extends StatelessWidget {
                             );
                           }
 
-                          // شاشات ضيقة: نستخدم تمرير عمودي، ولا يجوز استخدام Expanded
-                          // هنا لأن ارتفاع SingleChildScrollView غير محدود (unbounded).
                           return SingleChildScrollView(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
                             child: Column(
@@ -75,26 +71,27 @@ class MosqueClockScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    const AzkarTickerWidget(),
                   ],
                 );
               },
             ),
           ),
+          // شريط الأذكار ملتصق بأسفل الشاشة (خارج SafeArea)
+          const Positioned(bottom: 0, left: 0, right: 0, child: AzkarTickerWidget()),
 
           // زر اختبار الأذان (يمكن حذفه في الإصدار النهائي المخصص للعرض العام)
-          Positioned(
-            bottom: 90,
-            left: 16,
-            child: FloatingActionButton.extended(
-              heroTag: 'test_athan',
-              backgroundColor: AppColors.bgPanel2,
-              foregroundColor: AppColors.goldSoft,
-              onPressed: () => context.read<PrayerCubit>().testAnnounceNext(),
-              icon: const Icon(Icons.volume_up_rounded),
-              label: const Text('تجربة الأذان'),
-            ),
-          ),
+          // Positioned(
+          //   bottom: 90,
+          //   left: 16,
+          //   child: FloatingActionButton.extended(
+          //     heroTag: 'test_athan',
+          //     backgroundColor: AppColors.bgPanel2,
+          //     foregroundColor: AppColors.goldSoft,
+          //     onPressed: () => context.read<PrayerCubit>().testAnnounceNext(),
+          //     icon: const Icon(Icons.volume_up_rounded),
+          //     label: const Text('تجربة الأذان'),
+          //   ),
+          // ),
         ],
       ),
     );
